@@ -1,5 +1,7 @@
 # Doggie - Recetas para Perros
 
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=plastic&logo=python) ![Django](https://img.shields.io/badge/Django-5.1.3-092E20?style=plastic&logo=django) ![django-allauth](https://img.shields.io/badge/django--allauth-65.7.0-blue?style=plastic)
+
 Este es un proyecto Django para gestionar y mostrar recetas de comida para perros.
 
 ## Características Principales
