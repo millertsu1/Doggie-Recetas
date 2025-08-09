@@ -1,0 +1,92 @@
+{% extends 'recetas/layout.html' %}
+{% load static %}
+
+{% block title %} Todas los pacientes {% endblock %}
+{% block content %}
+<style>
+.efecto-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.efecto-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 5px 5px 0px black;
+}
+</style>
+<section class="container mt-5 ">
+    <h1 class="mb-5 text-center" style="font-family: 'Special Gothic Expanded One', sans-serif; color: #F7C236; text-shadow: 3px 3px black;">Nuestros pacientes</h1>
+
+    <!-- ! filtros -->
+    
+    <form method="get" class="mb-4 d-flex flex-wrap justify-content-center gap-3">
+        <!-- Filtro por categoría -->
+        <select name="categoria" class="form-select w-auto me-2 rounded-0" style="box-shadow: 3px 5px  black;">
+            <option value="">Todas las categorías</option>
+            <option value="desayuno" {% if categoria_actual == 'desayuno' %}selected{% endif %}>Desayuno</option>
+            <option value="almuerzo" {% if categoria_actual == 'almuerzo' %}selected{% endif %}>Almuerzo</option>
+            <option value="cena" {% if categoria_actual == 'cena' %}selected{% endif %}>Cena</option>
+            <option value="snack" {% if categoria_actual == 'snack' %}selected{% endif %}>Snack</option>
+        </select>
+    
+        <!-- Filtro por tiempo de preparación -->
+        <input type="number" name="tiempo_max" class="form-control w-auto rounded-0" style="box-shadow: 3px 5px  black;" placeholder="Tiempo máx (min)" value="{{ tiempo_max|default:'' }}">
+    
+        <!-- Filtro por porciones -->
+        <input type="number" name="porciones_min" class="form-control w-auto rounded-0" style="box-shadow: 3px 5px  black;" placeholder="Mín porciones" value="{{ porciones_min|default:'' }}">
+        <input type="number" name="porciones_max" class="form-control w-auto rounded-0" style="box-shadow: 3px 5px  black;" placeholder="Máx porciones" value="{{ porciones_max|default:'' }}">
+    
+        <button type="submit" class="btn rounded-0 efecto-hover border-black border-2" style="background-color: #F7C236; ">Filtrar</button>
+        <a href="{% url 'lista_recetas' %}" class="btn rounded-0 efecto-hover border-black border-2" style="background-color: #F7C236;">Limpiar filtros</a>
+    </form>
+
+    <!-- ! end Filtros -->
+    
+
+    <ul class="container d-flex justify-content-between flex-wrap">
+        {% for paciente in pacientes %}
+        <div class="card position-relative my-4 border border-black border-3 rounded-0" style="width: 18rem;">
+            <img src={{ paciente.imagen.url }} class="card-img-top rounded-0" alt={{ paciente.nombre }}<>
+            <div class="card-body">
+                <h5 class="card-title ">{{ paciente.nombre }}</h5>
+                <div>
+                    <small
+                        class="bg-white text-black px-2 py-2 border-black position-absolute top-0 end-0 rounded-start-pill fw-medium" style="box-shadow: 3px 5px  black;">{{paciente.peso}}
+                        Kg</small>
+                </div>
+                <div>
+                    <small class="bg-white text-black px-2 py-2 border-black position-absolute top-0 start-0 rounded-end-pill fw-medium" style="box-shadow: -3px 5px  black; ">{{ paciente.edad }} años</small>
+                </div>
+                <div>
+                    <small class=" text-black px-2 py-2 border-black rounded-end-pill fw-medium efecto-hover" style="box-shadow: -3px 5px  black;  position: absolute;top: 50px; left: 0; background-color: #F7C236;">{{ paciente.altura | upper }} cm</small>
+                </div>
+                <a href="#" class="btn mt-2 border-black border-2 rounded-0 fw-medium w-100 efecto-hover"
+                    style="background-color: #F7C236;">Ver paciente</a>
+            </div>
+        </div>
+        {% endfor %}
+    </ul>
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Paginación de recetas">
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if categoria_actual %}&categoria={{ categoria_actual }}{% endif %}{% if tiempo_max %}&tiempo_max={{ tiempo_max }}{% endif %}{% if porciones_min %}&porciones_min={{ porciones_min }}{% endif %}{% if porciones_max %}&porciones_max={{ porciones_max }}{% endif %}"  style="background-color: #FFF; color: black; border: 2px solid black;">Anterior</a>
+              </li>
+            {% endif %}
+      
+            {% for num in page_obj.paginator.page_range %}
+              <li class="page-item {% if page_obj.number == num %}active{% endif %}" style="background-color: #806417;" >
+                <a class="page-link" href="?page={{ num }}{% if categoria_actual %}&categoria={{ categoria_actual }}{% endif %}{% if tiempo_max %}&tiempo_max={{ tiempo_max }}{% endif %}{% if porciones_min %}&porciones_min={{ porciones_min }}{% endif %}{% if porciones_max %}&porciones_max={{ porciones_max }}{% endif %}" style="background-color: {% if page_obj.number == num %}#F7C236{% else %}white{% endif %}; color: {% if page_obj.number == num %}black{% else %}black{% endif %}; border: 2px solid black;">{{ num }}</a>
+              </li>
+            {% endfor %}
+      
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if categoria_actual %}&categoria={{ categoria_actual }}{% endif %}{% if tiempo_max %}&tiempo_max={{ tiempo_max }}{% endif %}{% if porciones_min %}&porciones_min={{ porciones_min }}{% endif %}{% if porciones_max %}&porciones_max={{ porciones_max }}{% endif %}" style="background-color: #FFF; color: black; border: 2px solid black;">Siguiente</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+</section>
+{% endblock %}

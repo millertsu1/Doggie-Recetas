@@ -1,0 +1,22 @@
+# Archivos de cache de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Base de datos
+db.sqlite3
+
+# Entorno virtual
+venv/
+
+# Archivos de media subidos por los usuarios
+/media/
+
+# Archivos estáticos (si se colectan)
+/static/
+
+# Archivos de logs
+*.log
+
+# Archivos de entorno (si se usan)
+.env
