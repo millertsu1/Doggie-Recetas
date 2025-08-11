@@ -1,7 +1,7 @@
 {% extends 'recetas/layout.html' %}
 {% load static %}
 
-{% block title %} Todas los pacientes {% endblock %}
+{% block title %} Todos los pacientes {% endblock %}
 {% block content %}
 <style>
 .efecto-hover {
@@ -59,9 +59,10 @@
                 <div>
                     <small class=" text-black px-2 py-2 border-black rounded-end-pill fw-medium efecto-hover" style="box-shadow: -3px 5px  black;  position: absolute;top: 50px; left: 0; background-color: #F7C236;">{{ paciente.altura | upper }} cm</small>
                 </div>
-                <a href="#" class="btn mt-2 border-black border-2 rounded-0 fw-medium w-100 efecto-hover"
+                <a href="{% url 'detalle_paciente' paciente.id %}" class="btn mt-2 border-black border-2 rounded-0 fw-medium w-100 efecto-hover"
                     style="background-color: #F7C236;">Ver paciente</a>
             </div>
+            
         </div>
         {% endfor %}
     </ul>

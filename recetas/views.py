@@ -51,3 +51,7 @@ def lista_recetas(request):
 def lista_pacientes(request):
     pacientes = Paciente.objects.all()
     return render(request, 'recetas/lista_pacientes.html', {'pacientes': pacientes})
+
+def detalle_paciente(request, paciente_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    return render(request, 'recetas/detalle_paciente.html', {'paciente': paciente})

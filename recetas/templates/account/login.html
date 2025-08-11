@@ -1,0 +1,77 @@
+{% extends 'recetas/layout.html' %}
+{% load i18n %}
+{% load allauth account %}
+
+{% block title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<section class="container mt-5 w-75 mx-auto my-5">
+    <div class="row justify-content-center">
+    <div class=" justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-black border-3 rounded-0" style="box-shadow: 5px 5px 0px black;">
+                <div class="card-body">
+                    <h1 class="text-center text-2xl mb-4" style="font-family: 'Special Gothic Expanded One', sans-serif; color: #000000; ">{% trans "Sign In" %}</h1>
+                    
+                    {% if not SOCIALACCOUNT_ONLY %}
+                        <p class="text-center text-black">{% blocktranslate %}Si aún no tienes una cuenta, por favor <a href="{{ signup_url }}" class="link link-primary">regístrate</a>.{% endblocktranslate %}</p>
+                        
+                        <form method="post" action="{% url 'account_login' %}" class="login">
+                            {% csrf_token %}
+                            
+                            <div class="form-control w-full">
+                                <label class="label text-black" for="{{ form.login.id_for_label }}">
+                                    <span class="label-text">{{ form.login.label }}</span>
+                                </label>
+                                {{ form.login }}
+                            </div>
+                            
+                            <div class="form-control w-full">
+                                <label class="label text-black" for="{{ form.password.id_for_label }}">
+                                    <span class="label-text">{{ form.password.label }}</span>
+                                </label>
+                                {{ form.password }}
+                            </div>
+                            
+                            {% if form.remember %}
+                            <div class="form-control">
+                                <label class="label cursor-pointer">
+                                    <span class="label-text text-black">{{ form.remember.label }}</span>
+                                    {{ form.remember }}
+                                </label>
+                            </div>
+                            {% endif %}
+
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                            {% endif %}
+                            
+                            <div class=" gap-2 mt-4 mx-auto">
+                                <button type="submit" class="p-2 efecto-hover border-black border-2 mr-2 text-black" style="background-color: #F7C236;">{% trans "Sign In" %}</button>
+                            </div>
+                        </form>
+                    {% endif %}
+                    
+                    {% if SOCIALACCOUNT_ENABLED %}
+                        <div class="divider">{% trans "or" %}</div>
+                        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    // Add daisyUI classes to the form inputs
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('form.login input[type="text"], form.login input[type="password"], form.login input[type="email"]');
+        inputs.forEach(input => {
+            input.classList.add('input', 'input-bordered', 'w-full', 'rounded-0');
+        });
+        const checkboxes = document.querySelectorAll('form.login input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.classList.add('checkbox');
+        });
+    });
+</script>
+{% endblock %}

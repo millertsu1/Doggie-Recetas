@@ -1,0 +1,60 @@
+{% extends 'recetas/layout.html' %}
+{% load i18n %}
+{% load allauth account %}
+
+{% block title %}{% trans "Sign Up" %}{% endblock %}
+
+{% block content %}
+<section class="container mt-5 w-75 mx-auto my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 my-[50px]">
+            <div class="card border-black border-3 rounded-0" style="box-shadow: 5px 5px 0px black;">
+                <div class="card-body">
+                    <h1 class=" text-center text-2xl mb-4" style="font-family: 'Special Gothic Expanded One', sans-serif; color: #000000;">{% trans "Sign Up" %}</h1>
+                    
+                    <p class="text-center text-black">{% blocktranslate %}¿Ya tienes una cuenta? Entonces, por favor <a href="{{ login_url }}" class="link link-primary">inicia sesión</a>.{% endblocktranslate %}</p>
+                    
+                    {% if not SOCIALACCOUNT_ONLY %}
+                        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                            {% csrf_token %}
+                            
+                            {% for field in form %}
+                            <div class="form-control w-full">
+                                <label class="label text-black" for="{{ field.id_for_label }}">
+                                    <span class="label-text">{{ field.label }}</span>
+                                </label>
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <label class="label">
+                                        <span class="label-text-alt text-red-500">{{ error }}</span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}" value="{{ Omelette de Huevo y Vegetales para Perrosredirect_field_value }}" />
+                            {% endif %}
+                            
+                            <div class=" gap-2 mt-4 mx-auto">
+                                <button type="submit" class="p-2 efecto-hover border-black border-2 mr-2" style="background-color: #F7C236;">{% trans "Sign Up" %}</button>
+                            </div>
+                        </form>
+                    {% endif %}
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    // Add daisyUI classes to the form inputs
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('form.signup input[type="text"], form.signup input[type="password"], form.signup input[type="email"]');
+        inputs.forEach(input => {
+            input.classList.add('input', 'input-bordered', 'w-full', 'rounded-0');
+        });
+    });
+</script>
+{% endblock %}

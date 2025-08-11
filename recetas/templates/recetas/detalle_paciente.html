@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %} {{ receta.nombre }} {% endblock %}
+{% block title %} {{ paciente.nombre }} {% endblock %}
 {% block content %}
 <style>
     .efecto-hover {
@@ -20,24 +20,14 @@
     <div class=" grid grid-cols-1 lg:grid-cols-2 gap-4 my-5 bg-amber- justify-between">
         <!-- Left Column -->
         <div class="my-3">
-            <span class=""><span>{{ receta.categoria }}</span></p>
-            <h1 class="">{{ receta.nombre }}</h1>
-            {% if receta.imagen %}
-            <img src="{{ receta.imagen.url }}" alt="{{ receta.nombre }}"
+            
+            <h1 class="">{{ paciente.nombre }}</h1>
+            {% if paciente.imagen %}
+            <img src="{{ paciente.imagen.url }}" alt="{{ paciente.nombre }}"
                 class=" border-black border-3 my-5">
             {% else %}
             <p>No hay imagen disponible para esta receta.</p>
             {% endif %}
-            <div class="info">
-                <div style="box-shadow: 3px 3px black; background-color: #FFF;"
-                    class="button_hover button_hover:hover border-bottom border-black border-3 col-6 px-2 fw-medium">
-                    <p class="ml-2 mx-auto flex">⏲️ <span>{{ receta.tiempo_preparacion }} minutos</span></p>
-                </div>
-                <div style="box-shadow: 3px 3px black; background-color: #FFF;"
-                    class=" border-bottom border-black border-3 col-6 px-2 fw-medium mt-2">
-                    <p>Porciones <span>{{ receta.porciones }}</span></p>
-                </div>
-            </div>
         </div>
 
         <!-- Right Column -->
@@ -75,9 +65,9 @@
     </div>
 
     <div class="text-center my-5">
-        <a href="{% url 'lista_recetas' %}"
+        <a href="{% url 'lista_pacientes' %}"
             class="btn mx-auto border-black border-3 rounded-0 fw-medium  w-auto efecto-hover"
-            style="background-color: #F7C236;">Volver a la lista de recetas</a>
+            style="background-color: #F7C236;">Volver a la lista de pacientes</a>
     </div>
 
 </section>

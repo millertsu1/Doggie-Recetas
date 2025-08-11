@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    'tailwind',
+    'theme',
 ]
 
 
@@ -155,3 +158,9 @@ ACCOUNT_LOGIN_METHODS = {"username", "email"}
 
 
 ACCOUNT_UNIQUE_EMAIL= True
+ACCOUNT_LOGOUT_ON_GET = True
+
+""" tailwind configuration """
+
+TAILWIND_APP_NAME = 'theme'
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
